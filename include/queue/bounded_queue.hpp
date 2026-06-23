@@ -14,8 +14,7 @@ private:
     // mutex для синхронизации доступа к очереди
     std::mutex mtx_;
 
-    // condition_variable для ожидания, когда очередь не пуста или не полна
-    std::condition_variable not_empty_;
+    // condition_variable для ожидания, когда очередь не полна
     std::condition_variable not_full_;
 
     // максимальная вместимость очереди

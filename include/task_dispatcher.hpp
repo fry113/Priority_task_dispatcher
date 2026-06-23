@@ -8,12 +8,12 @@
 
 namespace dispatcher {
 
-#define HIGH_PRIORITY_TASKS_COUNT 1'000
+inline const size_t HIGH_PRIORITY_TASKS_COUNT = 1'000;
 // отображение приоритета на конфигурацию представил в виде std::map,
 // чтобы задавать конфигурацию как conf[High] = {true, 10} или conf[Low] = queueOption;
 using Conf = std::map<TaskPriority, queue::QueueOptions>;
-static Conf default_conf = {{TaskPriority::High, {true, HIGH_PRIORITY_TASKS_COUNT}},
-                            {TaskPriority::Normal, {false, std::nullopt}}};
+inline const Conf default_conf = {{TaskPriority::High, {true, HIGH_PRIORITY_TASKS_COUNT}},
+                                  {TaskPriority::Normal, {false, std::nullopt}}};
 
 class TaskDispatcher {
 public:  // types

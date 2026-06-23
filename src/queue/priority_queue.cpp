@@ -32,6 +32,9 @@ void PriorityQueue::push(TaskPriority priority, Task task) {
     }
     it->second->push(std::move(task));
     // отпускаем mutex и уведомляем один поток
+    {
+        std::lock_guard lock(mtx_);
+    }
     cv_.notify_one();
 }
 

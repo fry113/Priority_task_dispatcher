@@ -24,9 +24,6 @@ void BoundedQueue::push(std::function<void()> task) {
 
     // если очередь не полна, добавляем задачу
     queue_.push(std::move(task));
-
-    // уведомляем один поток, что очередь не пуста
-    not_empty_.notify_one();
 }
 
 std::optional<std::function<void()>> BoundedQueue::try_pop() {
@@ -40,6 +37,7 @@ std::optional<std::function<void()>> BoundedQueue::try_pop() {
     auto task = std::move(queue_.front());
     queue_.pop();
 
+    lock.unlock();
     not_full_.notify_one();
     return task;
 }

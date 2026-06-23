@@ -53,33 +53,20 @@ TEST(BoundedQueueTest, OrderCheck) {
     EXPECT_EQ(value, check);
 }
 
-TEST(BoundedQueueTest, PushFullQueueCheck) {
-    BoundedQueue queue(5);
-    std::atomic<int> value{0};
-    auto task = [&]() { value.fetch_add(1); };
-
-    for (int i = 0; i < 5; ++i) {
-        queue.push([]() {});
-    }
-    for (int i = 0; i < 5; ++i) {
-        auto task = queue.try_pop();
-        EXPECT_TRUE(task.has_value());
-    }
-    EXPECT_FALSE(queue.try_pop().has_value());
-}
-
 TEST(BoundedQueueTest, PushOverQueueCheck) {
     BoundedQueue queue(5);
     std::atomic<int> value{0};
-    auto task = [&]() { value.fetch_add(1); };
+    auto task = [&value] { value.fetch_add(1); };
 
     for (int i = 0; i < 5; ++i) {
-        queue.push([]() {});
+        queue.push(task);
     }
     for (int i = 0; i < 5; ++i) {
         auto task = queue.try_pop();
+        (*task)();
         EXPECT_TRUE(task.has_value());
     }
+    EXPECT_EQ(value.load(), 5);
     EXPECT_FALSE(queue.try_pop().has_value());
 }
 
