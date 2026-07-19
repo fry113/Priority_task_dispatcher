@@ -36,8 +36,6 @@ public:
     explicit PriorityQueue(const Conf &conf);
 
     void push(TaskPriority priority, Task task);
-    // block on pop until shutdown is called
-    // after that return std::nullopt on empty queue
     std::optional<Task> pop();
 
     void shutdown();

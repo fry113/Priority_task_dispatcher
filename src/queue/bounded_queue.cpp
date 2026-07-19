@@ -10,7 +10,6 @@ namespace dispatcher::queue {
 using namespace std;
 
 BoundedQueue::BoundedQueue(int capacity) {
-    // capacity int-овый. проверяем, что он положительный, иначе - исключение
     if (capacity <= 0) {
         throw std::invalid_argument("Ограниченная очередь должна иметь положительную вместимость");
     }

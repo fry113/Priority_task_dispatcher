@@ -70,11 +70,3 @@ TEST(UnboundedQueueTest, ConcurrentCheck) {
     // проверяем, что все задачи были выполнены
     EXPECT_EQ(value.load(std::memory_order_relaxed), check);
 }
-
-// --------------------------
-
-// deprecated
-// TEST(BoundedQueueTest, ConstructorThrows) {
-//     EXPECT_THROW((void)BoundedQueue(0), std::invalid_argument);
-//     EXPECT_THROW((void)BoundedQueue(-1), std::invalid_argument);
-// }
